@@ -5,8 +5,21 @@
   padding: 10px;
 }
 
+#outer-box{
+  border: 10px solid purple;
+}
+
 p {
   color: yellow;
   margin: 0;
   padding: 0;
+}
+
+.white-text{
+  color:white;
+  /* margin-inline-start: -10px; --for getting the white text and yellow text in same column  */
+}
+
+.inner-box{
+  background-color: red;
 }
