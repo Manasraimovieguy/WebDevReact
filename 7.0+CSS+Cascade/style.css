@@ -1,0 +1,26 @@
+/* Don't change the existing CSS. */
+
+.box {
+  background-color: blue;
+  padding: 10px;
+}
+
+#outer-box{
+  /*border: 10px solid purple;*/ /*I did it this way, which wasn't intended*/
+  background-color: purple; /*This is the intended way*/
+}
+
+p {
+  color: yellow;
+  margin: 0;
+  padding: 0;
+}
+
+.white-text{
+  color:white;
+  /* margin-inline-start: -10px; --for getting the white text and yellow text in same column  */
+}
+
+.inner-box{
+  background-color: red;
+}
