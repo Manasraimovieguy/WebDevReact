@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mondrian Project</title>
+  <style>
+    /* 
+    Write your CSS here 
+    Gap Colour: #000
+    White: #F0F1EC
+    Red: #E72F24
+    Black: #232629
+    Blue: #004592
+    Yellow: #F9D01E
+
+    For dimensions, see dimensions.png image.
+    HINT: Remember you can't change the properties of grid lines.
+    But grid lines are transparent!
+    */
+    /*This solution sucks, didn't use any fractions and just did unnecessary calculations, but it is its own solution tho lol*/
+    .BigContainer{
+      display: grid;
+      background-color: #000;
+      height:748px;
+      width:748px;
+      gap: 9px;
+    }
+    .grid-container{
+      display:grid;
+      gap: 9px;
+      grid-template-columns: 320px 419px;
+      height: 414px;
+      width:748px;
+    }
+    .item1{
+      background-color: #E72F24;
+      height: 414px;
+      width:320px;
+    }
+    .item{
+      background-color: #F0F1EC;
+    }
+    .SmallContainer{
+      display:grid;
+      width:748px;
+      gap:9px;
+      grid-template-columns: 320px 369px 50px;
+      background-color: #000;
+    }
+    .grid-container2{
+      display: grid;
+      grid-template-columns: 320px 369px 50px;
+      gap:9px;
+    }
+
+    .item3{
+      background-color: #F0F1EC;
+    }
+    .item4{
+      background-color: #F0F1EC;
+    }
+    .itemContainer{
+      display: grid;
+      grid-template-columns: 50px;
+      gap:9px;
+    }
+    .item5{
+      background-color: #004592;
+      border: #000;
+      height:130px;
+      width:41px;
+
+    }
+    .item6{
+      background-color: #F0F1EC;
+      height:200px;
+      width:41px;
+      border: #000;
+      border-top: 10px;
+
+
+      
+    }
+    .grid-container3{
+      display:grid;
+      grid-template-columns: 320px 198px 160px 35px; 
+      gap:9px;
+    }
+
+    .item7{
+      background-color: #F0F1EC;
+      height:25px;
+    }
+    .item8{
+      background-color: #F9D01E;
+      height:25px;
+    }
+    .item9{
+      background-color: #232629;
+      height:25px;
+    }
+    .item10{
+      background-color: #F0F1EC;
+      width:41px;
+      margin-top: -9px;
+      margin-left:2px
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Write your HTML here -->
+  <div class="BigContainer">
+    <div class="grid-container">
+      <div class="item1"></div>
+      <div class="item"></div>
+    </div>
+    <div class="SmallContainer">
+        <div class="item3"></div>
+        <div class="item4"></div>
+        <div class="itemContainer">
+          <div class="item5"></div>
+          <div class="item6"></div>
+        </div>
+        <div class="grid-container3">
+          <div class="item7"></div>
+          <div class="item8"></div>
+          <div class="item9"></div>
+          <div class="item10"></div>
+  
+        </div>
+  
+  
+  
+    </div>
+  
+  </div>
+</body>
+
+</html>
