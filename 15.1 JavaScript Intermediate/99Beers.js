@@ -1,0 +1,1 @@
+//Just doing this for funsies, a lot of js videos which I am skimming through coz I know quite a bit of it
