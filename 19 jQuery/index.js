@@ -30,6 +30,13 @@
 // })
 
 //changing h1 based on keypress using jquery
-$(document).keypress(function(event){
-    $("h1").text(event.key);
-})
+// $(document).keypress(function(event){
+//     $("h1").text(event.key);
+// })
+
+// adding and removing elements
+// before(), after(), append(), prepend()
+// $("h1").before("<button>New</button"); // ==> <button>New</button><h1>Hello</h1>
+// $("h1").after("<button>New</button"); // ==> <h1>Hello</h1><button>New</button>
+// $("h1").prepend("<button>New</button"); // ==> <h1><button>New</button>Hello</h1>
+// $("h1").append("<button>New</button"); // ==> <h1>Hello<button>New</button></h1>
