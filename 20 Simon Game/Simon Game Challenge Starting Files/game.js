@@ -92,7 +92,7 @@ function checkAnswer(currentLevel){
         setTimeout(function(){
             $("body").removeClass("game-over");
         },200)
-        start = false;
+        start = false; // resetting boolean
 
     }
 
