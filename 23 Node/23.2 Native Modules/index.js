@@ -7,4 +7,4 @@ const fs = require("fs");
 fs.readFile("message.txt","utf-8",(err,data)=>{ // IMP: Order of parameters matter here, I put (data,err) and was getting an error thrown and didn't know why
     if (err) throw err;
     console.log(data);
-})
+}) // Making additional comment from new laptop
