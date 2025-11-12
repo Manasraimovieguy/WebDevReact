@@ -1,3 +1,4 @@
+// exercise is to use library morgan to provide details in terminal for API request details to be viewed
 import express from "express";
 import morgan from "morgan";
 
