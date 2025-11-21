@@ -3,7 +3,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 
-//my method
+//my method - just took care of it in the post method
 // const __dirname = dirname(fileURLToPath(import.meta.url));
 // const app = express();
 // const port = 3000;
@@ -31,7 +31,7 @@ let bandName = "";
 
 app.use(bodyParser.urlencoded({extended: true})); //implemented
 
-function bandNameGenerator(req, res, next){ //using custom middleware
+function bandNameGenerator(req, res, next){ //using custom middleware (NOTE: Remember middleware order matters, try playing around with app.use() positioning, it will mess things up)
   console.log(req.body); // just for lulz
   bandName = req.body.street + req.body.pet; // or you can write req.body["street"]
   next();
