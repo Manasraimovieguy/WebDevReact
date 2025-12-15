@@ -1,0 +1,21 @@
+<!-- Step 3 Add Header -->
+<%- include("partials/header.ejs") %>
+
+<!-- Step 2 - If an adjective and noun are sent to this ejs file, 
+    Change the h1 to show the adjective and noun.
+    But when the user first goes on the website and there is no adjective and noun, 
+    Show the default h1 below -->
+
+<% if (!adj && !noun){%>
+  <h1>Welcome to the Band Generator 🤟</h1>
+
+<%}else{%>
+  <h1><%=adj%> <%=noun%></h1> 
+  <!-- one thing I don't get about embedded js is this sort of inbuilt understanding of how data path works, whether it is folder directory or object notation, I don't have to specific the object key notation here (i.e data.adj or data.noun), and when I do it throws an error, same with header.ejs when trying to point to CSS files -->
+<%}%>
+
+<form action="/submit" method="POST">
+  <input type="submit" value="Generate Name">
+</form>
+<!-- Step 3 Add Footer -->
+<%- include("partials/footer.ejs") %>
