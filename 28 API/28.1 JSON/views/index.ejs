@@ -18,6 +18,7 @@
     <% if (!tacoChoice){ %>
       <h2>Pick your favourite taco ingredient 👆</h2>
       <% } else { %>
+        <h2><%=tacoTitle%></h2>
         <h3>Ingredients:</h3>
         <ul id="ingredientsList">
           <li><%=ingredients.protein.name%>,<%=ingredients.protein.preparation%></li>

@@ -25,6 +25,7 @@ app.post("/recipe", (req, res) => {
   const foodData = JSON.parse(recipeJSON);
   if(req.body["choice"] === "chicken"){
     const data = {
+      tacoTitle: foodData[0].name,
       tacoChoice: req.body["choice"],
       ingredients: foodData[0].ingredients
 
@@ -35,6 +36,7 @@ app.post("/recipe", (req, res) => {
   }
   else if(req.body["choice"] === "beef"){
     const data = {
+      tacoTitle: foodData[1].name,
       tacoChoice: req.body["choice"],
       ingredients: foodData[1].ingredients
 
@@ -45,6 +47,7 @@ app.post("/recipe", (req, res) => {
   }
   else if(req.body["choice"] === "fish"){
     const data = {
+      tacoTitle: foodData[2].name,
       tacoChoice: req.body["choice"],
       ingredients: foodData[2].ingredients
 
