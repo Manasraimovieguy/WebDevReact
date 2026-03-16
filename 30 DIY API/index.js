@@ -35,16 +35,115 @@ app.get("/jokes/:id", (req, res) => {
 });
 
 //3. GET a jokes by filtering on the joke type
+app.get("/filter", (req, res) => {
+  try {
+    let jokeType = req.query.type;
+    let jokeFound = jokes.filter((joke) => joke.jokeType === jokeType);
+    res.json(jokeFound);
+    // console.log(result);
+    
+  } catch (error) {
+    console.error("Failed to make request:", error.message);
+    res.send(error.message);
+  }
+});
 
 //4. POST a new joke
+app.post("/jokes", (req,res) => {
+  try{
+    let jokeId = jokes.length + 1;
+    jokes.push({
+      id: jokeId,
+      jokeText: req.body.text,
+      jokeType: req.body.type,
+    });
+    res.send("Joke posted successfully");
 
+  } catch(error){
+    console.error("Failed to make request:", error.message);
+    res.send(error.message);
+  }
+})
 //5. PUT a joke
+app.put("/jokes/:id", (req,res) => {
+  try{
+    let jokeId = parseInt(req.params.id);
+    const searchIndex = jokes.findIndex((joke) => joke.id === jokeId);
+    if(searchIndex === -1){
+      res.send("Could not find ur joke");
+    }
+    else{
+      // console.log(jokes[0]);
+      jokes[searchIndex].jokeText = req.body.text;
+      jokes[searchIndex].jokeType = req.body.type;
+      // console.log(jokes[0])
+      res.send("Joke replaced successfully");
+  }
+
+  } catch(error){
+    console.error("Failed to make request:", error.message);
+    res.send(error.message);
+  }
+}) 
 
 //6. PATCH a joke
+app.patch("/jokes/:id", (req,res) => {
+  try{
+    let jokeId = parseInt(req.params.id);
+    const searchIndex = jokes.findIndex((joke) => joke.id === jokeId);
+    if(searchIndex === -1){
+      res.send("Could not find ur joke");
+    }
+    else{
+      // console.log(jokes[0]);
+      if(req.body.text)
+        jokes[searchIndex].jokeText = req.body.text;
+      if(req.body.type)
+        jokes[searchIndex].jokeType = req.body.type;
+      // console.log(jokes[0])
+      res.send("Joke edited successfully");
+  }
+
+  } catch(error){
+    console.error("Failed to make request:", error.message);
+    res.send(error.message);
+  }
+})
+
+//8. DELETE All jokes - Put this before jokes/:id because putting it after causes postman to not recognize the difference between /:id and /all, dumbass postman
+app.delete("/jokes/all", (req,res) => {
+  try{
+    jokes.splice(0, jokes.length);
+    res.send("All your jokes have been deleted brah")
+
+  } catch(error){
+    console.error("Failed to make request:", error.message);
+    res.send(error.message);
+  }
+})
 
 //7. DELETE Specific joke
+app.delete("/jokes/:id", (req,res) => {
+  try{
+    let jokeId = parseInt(req.params.id);
+    const searchIndex = jokes.findIndex((joke) => joke.id === jokeId);
+    if(searchIndex === -1){
+      res.send("Could not find ur joke");
+    }
+    else{
+      // console.log(jokes[0]);
+      jokes.splice(searchIndex, 1);
+      res.send("Your joke is deleted brah")
+  }
 
-//8. DELETE All jokes
+  } catch(error){
+    console.error("Failed to make request:", error.message);
+    res.send(error.message);
+  }
+})
+
+
+
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
