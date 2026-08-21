@@ -64,7 +64,8 @@ app.post("/add", async (req, res) => {
   const country = req.body.country;
   // console.log(country);
   try{
-    const result = await db.query("SELECT country_code FROM countries WHERE country_name = $1", [country]);
+    // const result = await db.query("SELECT country_code FROM countries WHERE country_name = $1", [country]);
+    const result = await db.query("SELECT country_code FROM countries WHERE LOWER(country_name) LIKE '%' || $1 || '%'", [country.toLowerCase()]); // update to allow user to enter parts of longer country names (Like 'America' isntead of 'United States of America')
     if(result.rows.length > 0){
       try{
         await db.query('INSERT INTO visited_countries (country_code) VALUES ($1)', [result.rows[0].country_code]);
