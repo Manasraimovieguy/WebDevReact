@@ -18,6 +18,15 @@ db.connect();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+async function checkVisisted() {
+  const result = await db.query("SELECT country_code FROM visited_countries");
+
+  let countries = [];
+  result.rows.forEach((country) => {
+    countries.push(country.country_code);
+  });
+  return countries;
+}
 
 app.get("/", async (req, res) => {
   //Write your code here.
@@ -53,13 +62,41 @@ app.get("/", async (req, res) => {
 
 app.post("/add", async (req, res) => {
   const country = req.body.country;
-  console.log(country);
-  const result = await db.query("SELECT country_code FROM countries WHERE country_name = $1", [country]);
-  // console.log(result);
-  if(result.rows){
-    await db.query('INSERT INTO visited_countries (country_code) VALUES ($1)', [result.rows[0].country_code]);
-    res.redirect("/"); // just call the get method, really cool way, you can also call a repeatable function
+  // console.log(country);
+  try{
+    const result = await db.query("SELECT country_code FROM countries WHERE country_name = $1", [country]);
+    if(result.rows.length > 0){
+      try{
+        await db.query('INSERT INTO visited_countries (country_code) VALUES ($1)', [result.rows[0].country_code]);
+        res.redirect("/"); // just call the get method, really cool way, you can also call a repeatable function
+      }
+      catch(err){
+        const countries = await checkVisisted();
+        res.render("index.ejs", {
+          countries: countries,
+          total: countries.length,
+          error: "Country already added, you dumb mothafucka",
+        });
+      }
+      
+    }
+    else{
+      throw new Error("Country name does not exist, try again.")
+    }
   }
+  catch (err){
+    // console.log(err);
+    const countries = await checkVisisted();
+    res.render("index.ejs", {
+      countries: countries,
+      total: countries.length,
+      error: err,
+    });
+
+  }
+
+  // console.log(result);
+  
 })
 
 
