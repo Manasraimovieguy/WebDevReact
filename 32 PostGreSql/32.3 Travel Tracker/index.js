@@ -81,7 +81,9 @@ app.post("/add", async (req, res) => {
       
     }
     else{
-      throw new Error("Country name does not exist, try again.")
+      throw new Error("Country name does not exist, try again.") // query can return a null value that won't throw an error, you either need to generate a possible error in the try block 
+      // or throw an error when the condition fails, which is what I did
+      // Refer to solution3.js for how Angela makes an error in the try block by declaring a const variable for country_code which results in a null value creating the error
     }
   }
   catch (err){
