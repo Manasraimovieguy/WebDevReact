@@ -9,7 +9,7 @@ const db = new pg.Client({
   user: "postgres",
   host: "localhost",
   database: "world",
-  password: "123456",
+  password: "Daigo@Dojima#0",
   port: 5432,
 });
 db.connect();
@@ -19,28 +19,47 @@ app.use(express.static("public"));
 
 let currentUserId = 1;
 
-let users = [
-  { id: 1, name: "Angela", color: "teal" },
-  { id: 2, name: "Jack", color: "powderblue" },
-];
+// let users = [
+//   { id: 1, name: "Manas", color: "teal" },
+//   { id: 2, name: "Manavee", color: "powderblue" },
+// ];
 
 async function checkVisisted() {
-  const result = await db.query("SELECT country_code FROM visited_countries");
+  const result = await db.query("SELECT country_code FROM visited_countries JOIN family_user ON family_user.id = visited_countries.user_id WHERE user_id = $1;", [currentUserId]);
   let countries = [];
   result.rows.forEach((country) => {
     countries.push(country.country_code);
   });
+  console.log(countries);
   return countries;
 }
+
+async function getCurrentUser(){
+  const result = await db.query("Select * from family_user");
+  const users = result.rows;
+  for(let i = 0; i<users.length; i++){
+    if(users[i].id == currentUserId){
+      console.log(users[i]);
+      return users[i]
+    }
+  }
+}
+
+
 app.get("/", async (req, res) => {
   const countries = await checkVisisted();
+  const currentUser = await getCurrentUser();
+  const result = await db.query("Select * from family_user");
+  let dbUser = result.rows;
   res.render("index.ejs", {
     countries: countries,
     total: countries.length,
-    users: users,
-    color: "teal",
+    users: dbUser,
+    color: currentUser.color,
   });
 });
+
+
 app.post("/add", async (req, res) => {
   const input = req.body["country"];
 
@@ -54,8 +73,8 @@ app.post("/add", async (req, res) => {
     const countryCode = data.country_code;
     try {
       await db.query(
-        "INSERT INTO visited_countries (country_code) VALUES ($1)",
-        [countryCode]
+        "INSERT INTO visited_countries (country_code, user_id) VALUES ($1,$2)",
+        [countryCode, currentUserId]
       );
       res.redirect("/");
     } catch (err) {
@@ -65,11 +84,27 @@ app.post("/add", async (req, res) => {
     console.log(err);
   }
 });
-app.post("/user", async (req, res) => {});
+
+app.post("/user", async (req, res) => {
+  if(req.body.add === 'new'){
+    res.render("new.ejs")
+  }
+  else{
+    currentUserId = req.body.user;
+    res.redirect("/");
+  }
+  
+});
 
 app.post("/new", async (req, res) => {
   //Hint: The RETURNING keyword can return the data that was inserted.
   //https://www.postgresql.org/docs/current/dml-returning.html
+  // console.log(req.body);
+  const result = await db.query("Insert into family_user (name, color) values ($1, $2) RETURNING *", [req.body.name, req.body.color]);
+  currentUserId = result.rows[0].id;
+  res.redirect("/");
+  // console.log(result);
+
 });
 
 app.listen(port, () => {

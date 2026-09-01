@@ -9,7 +9,7 @@ const db = new pg.Client({
   user: "postgres",
   host: "localhost",
   database: "world",
-  password: "123456",
+  password: "Daigo@Dojima#0",
   port: 5432,
 });
 db.connect();
@@ -26,7 +26,7 @@ let users = [
 
 async function checkVisisted() {
   const result = await db.query(
-    "SELECT country_code FROM visited_countries JOIN users ON users.id = user_id WHERE user_id = $1; ",
+    "SELECT country_code FROM visited_countries JOIN family_user ON family_user.id = user_id WHERE user_id = $1; ",
     [currentUserId]
   );
   let countries = [];
@@ -37,7 +37,7 @@ async function checkVisisted() {
 }
 
 async function getCurrentUser() {
-  const result = await db.query("SELECT * FROM users");
+  const result = await db.query("SELECT * FROM family_user");
   users = result.rows;
   return users.find((user) => user.id == currentUserId);
 }
