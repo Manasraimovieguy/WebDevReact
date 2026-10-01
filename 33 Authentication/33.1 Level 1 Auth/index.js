@@ -35,14 +35,22 @@ app.post("/register", async (req, res) => {
 
   // before doing the following, you can also perform a query to check if the email already exists in db
   // I know how to do but I am lazy, I have done an implementation like it in the post method for login, so I feel confident in implementing again when need be
-
-  try{
+  // FINE, I did it
+  const checkResult = await db.query("Select * from users where email = ($1)", [email]);
+  if(checkResult.rows.length >= 0){
+    res.send("Email already exists, try logging in instead");
+  }
+  else{
+    try{
     await db.query("insert into users (email, password) values ($1, $2)", [email, password]);
+    }
+    catch(err){
+      console.log(err)
+    }
+    res.redirect("/");
+
   }
-  catch(err){
-    console.log(err)
-  }
-  res.redirect("/");
+  
 });
 
 app.post("/login", async (req, res) => {
